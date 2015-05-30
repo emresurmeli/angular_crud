@@ -10,6 +10,9 @@ module.exports = function(grunt) {
 		jshint: {
 			dev: {
 				src: ['Gruntfile.js', 'server.js', 'tests/*.js', 'models/*.js', 'routes/*.js', 'app/**/*.js', 'build.js']
+			},
+			options: {
+				jshintrc: true
 			}
 		},
 
@@ -49,6 +52,6 @@ module.exports = function(grunt) {
 	});
 
 	grunt.registerTask('build:dev', ['webpack:client', 'copy:html']);
-	grunt.registerTask('jshint', ['jshint:dev']);
+	grunt.registerTask('lint', ['jshint:dev']);
 	grunt.registerTask('default', ['build:dev']);
 };
