@@ -8,7 +8,7 @@
   <main data-ng-controller="notesController" data-ng-init="getAll()">
     <h1>Notes</h1>
     <aside data-ng-if="errors.length">
-      <h2>Errors:</h2>
+      <h2>Errors</h2>
       <ul data-ng-repeat="error in errors">
         <li>{{error.msg}}</li>
       </ul>
