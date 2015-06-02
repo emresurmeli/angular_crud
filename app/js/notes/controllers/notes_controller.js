@@ -5,7 +5,7 @@ module.exports = function(app) {
     $scope.errors = [];
     $scope.notes = [];
 
-    $scope.getAll = function() {
+      $scope.getAll = function() {
       $http.get('/api/notes')
         .success(function(data) {
           $scope.notes = data;
@@ -17,12 +17,13 @@ module.exports = function(app) {
     };
 
     $scope.createNewNote = function() {
+      $scope.notes.push($scope.newNote);
       $http.post('/api/notes', $scope.newNote)
         .success(function(data) {
-          $scope.notes.push(data);
           $scope.newNote = null; 
         })
         .error(function(data) {
+          $scope.notes.splice($scope.notes.indexOf($scope.newNote), 1);
           console.log(data);
           $scope.errors.push({msg: 'could not create new note'});
         })
@@ -46,9 +47,16 @@ module.exports = function(app) {
         });
     };
 
-    $scope.clearErrors = function() {
-      $scope.errors = [];
-      $scope.getAll();
+    $scope.editCancel = function(note) {
+      var temp = note;
+      if(note.editing) {
+        note.noteBody = note.temp;
+        note.editing = false;
+      } else {
+        note.temp = note.noteBody;
+        note.editing = true;
+      }
     };
+
   }]);
 };
