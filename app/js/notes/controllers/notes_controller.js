@@ -1,54 +1,36 @@
 'use strict';
 
 module.exports = function(app) {
-  app.controller('notesController', ['$scope', '$http', function($scope, $http) {
-    $scope.errors = [];
+  app.controller('notesController', ['$scope', 'resource', function($scope, $http) {
     $scope.notes = [];
 
-      $scope.getAll = function() {
-      $http.get('/api/notes')
-        .success(function(data) {
-          $scope.notes = data;
-        })
-        .error(function(data) {
-          console.log(data);
-          $scope.errors.push({msg: 'error retrieving notes'});
-        });
+    var Note = resource('notes');
+
+    $scope.getAll = function() {
+      Note.getAll(function(data) {
+        $scope.notes = data;
+      });
     };
 
     $scope.createNewNote = function() {
-      $scope.notes.push($scope.newNote);
-      $http.post('/api/notes', $scope.newNote)
-        .success(function(data) {
-          $scope.newNote = null; 
-        })
-        .error(function(data) {
-          $scope.notes.splice($scope.notes.indexOf($scope.newNote), 1);
-          console.log(data);
-          $scope.errors.push({msg: 'could not create new note'});
-        })
+      Note.create(note, function(data) {
+        $scope.notes.push(data);
+      });
     };
 
     $scope.removeNote = function(note) {
-      $scope.notes.splice($scope.notes.indexOf(note), 1);
-      $http.delete('/api/notes/' + note._id)
-        .error(function(data) {
-          console.log(data);
-          $scope.errors.push({msg: 'could not remove note: ' + note.noteBody});
-        });
+      Note.remove(note, function(data) {
+        $scope.notes.splice($scope.notes.indexOf(note), 1);
+      });
     };
 
     $scope.saveNote = function(note) {
-      note.editing = false;
-      $http.put('/api/notes/' + note._id, note)
-        .error(function(data) {
-          console.log(data);
-          $scope.errors.push({msg: 'could not update note'});
-        });
+      Note.save(note, function(data) {
+        note.editing = false;
+      });
     };
 
     $scope.editCancel = function(note) {
-      var temp = note;
       if(note.editing) {
         note.noteBody = note.temp;
         note.editing = false;
