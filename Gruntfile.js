@@ -5,6 +5,7 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-contrib-copy');
 	grunt.loadNpmTasks('grunt-contrib-clean');
 	grunt.loadNpmTasks('grunt-contrib-jshint');
+	grunt.loadNpmTasks('grunt-contrib-watch');
 
 	grunt.initConfig({
 		jshint: {
@@ -47,6 +48,19 @@ module.exports = function(grunt) {
 		clean: {
 			dev: {
 				src: 'build/'
+			}
+		},
+
+		watch: {
+
+			app: {
+				html: {
+					files: ['.app/**/*.html'],
+					options: {
+						liveload: true
+					},
+				tasks: ['webpack:client', 'copy:html']
+				}
 			}
 		}
 	});

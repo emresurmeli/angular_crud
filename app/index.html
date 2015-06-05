@@ -16,7 +16,7 @@
         <button data-ng-click="clearErrors()">Clear Errors</button>
       </aside>
 
-      <form name="newNoteForm" data-ng-submit="createNewNote()">
+      <form name="newNoteForm" data-ng-submit="createNewNote(note)">
         <input type="text" required data-ng-model="note.noteBody">
         <button type="submit" data-ng-disabled="newNoteForm.$invalid">Create New Note</button>
       </form> 
