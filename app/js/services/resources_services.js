@@ -13,7 +13,7 @@ module.exports = function(app) {
 						method: 'GET',
 						url: '/api/' + resourceName
 					})
-					.success(callback);
+					.success(callback)
 					.error(handleError);
 				},
 
