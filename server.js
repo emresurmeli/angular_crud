@@ -10,7 +10,7 @@ mongoose.connect(process.env.MONGOLAB_URI || 'mongodb://localhost/notes_developm
 
 app.use(express.static(__dirname + '/build'));
 
-require('./routes/notes_routes')(notesRoutes);
+require('./routes/notes_routes.js')(notesRoutes);
 
 app.use('/api', notesRoutes);
 
