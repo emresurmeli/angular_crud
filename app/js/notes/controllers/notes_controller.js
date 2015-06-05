@@ -14,13 +14,14 @@ module.exports = function(app) {
 
     $scope.createNewNote = function(note) {
       Note.create(note, function(data) {
-        console.log(data);
+        console.log('Note: ' + data.noteBody + ' was created');
         $scope.notes.push(data);
       });
     };
 
     $scope.removeNote = function(note) {
       Note.remove(note, function(data) {
+        console.log('Note: ' + note.noteBody + ' was removed')
         $scope.notes.splice($scope.notes.indexOf(note), 1);
       });
     };
