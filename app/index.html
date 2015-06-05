@@ -29,7 +29,7 @@
             <form name="{{'editing' + note._id}}" data-ng-if="note.editing" data-ng-submit="saveNote(note)">
               <input type="text" data-ng-model="note.noteBody">
               <button type="submit">Save Changes</button>
-              <button data-ng-click="editCancel(note)">Cancel</button> 
+              <button type="button" data-ng-click="editCancel(note)">Cancel</button> 
             </form> 
         </li>
       </ul>

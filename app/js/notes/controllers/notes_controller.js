@@ -1,41 +1,50 @@
 'use strict';
 
 module.exports = function(app) {
-  app.controller('notesController', ['$scope', 'resource', function($scope, $http) {
+  app.controller('notesController', ['$scope', 'resource', function($scope, resource) {
     $scope.notes = [];
+    $scope.errors = [];
 
     var Note = resource('notes');
 
     $scope.getAll = function() {
-      Note.getAll(function(data) {
+      Note.getAll(function(err, data) {
+        if(err) return $scope.errors.push({msg: 'erros getting notes'});
         $scope.notes = data;
       });
     };
 
     $scope.createNewNote = function() {
-      Note.create(note, function(data) {
-        $scope.notes.push(data);
+      var newNote = $scope.newNote;
+      $scope.newNote = null;
+      $scope.notes.push(newNote);
+      Note.create(newNote, function(err,data) {
+        if(err) return $scope.errors.push({msg: 'erros getting notes'});
+        $scope.notes.splice($scope.notes.indexOf(newNote), 1, data);
       });
     };
 
     $scope.removeNote = function(note) {
-      Note.remove(note, function(data) {
-        $scope.notes.splice($scope.notes.indexOf(note), 1);
+      $scope.notes.splice($scope.notes.indexOf(note), 1);
+      Note.remove(note, function(err) {
+        if(err) $scope.errors.push({msg: 'erros getting notes'});
       });
     };
 
     $scope.saveNote = function(note) {
+      note.editing = false;
       Note.save(note, function(data) {
-        note.editing = false;
-      });
+        $scope.errors.push({msg: 'erros getting notes'});
+       });
     };
 
     $scope.editCancel = function(note) {
       if(note.editing) {
-        note.noteBody = note.temp;
+        note.noteBody = note.noteBodyBackup;
+        note.noteBodyBackup = undefined;
         note.editing = false;
       } else {
-        note.temp = note.noteBody;
+        note.noteBodyBackup = note.noteBody;
         note.editing = true;
       }
     };
