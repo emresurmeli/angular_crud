@@ -40,11 +40,11 @@ module.exports = function(app) {
 
     $scope.editCancel = function(note) {
       if(note.editing) {
-        note.noteBody = note.noteBodyBackup;
-        note.noteBodyBackup = undefined;
+        note.noteBody = note.temp;
+        note.temp = undefined;
         note.editing = false;
       } else {
-        note.noteBodyBackup = note.noteBody;
+        note.temp = note.noteBody;
         note.editing = true;
       }
     };
