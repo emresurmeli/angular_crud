@@ -2,7 +2,7 @@
 
 require('angular/angular');
 
-var notesApp = angular.module('notesApp', []);
+var notesApp = angular.module('notesApp', []); // jshint ignore:line
 
 //services
 require('./services/resources_services')(notesApp);
