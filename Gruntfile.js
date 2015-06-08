@@ -39,7 +39,7 @@ module.exports = function(grunt) {
 				output: {
 					path: 'tests/karma_tests/',
 					file: 'bundle.js'
-				}
+				} 
 			}
 		},
 
@@ -73,6 +73,7 @@ module.exports = function(grunt) {
 	});
 
 	grunt.registerTask('build:dev', ['webpack:client', 'copy:html']);
+	grunt.registerTask('karma', ['webpack:karma_test',]);
 	grunt.registerTask('lint', ['jshint:dev']);
 	grunt.registerTask('default', ['build:dev']);
 };
