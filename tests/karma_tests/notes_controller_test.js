@@ -40,5 +40,55 @@ describe('notes controller', function() {
 			expect($scope.notes[0].noteBody).toBe('test note');
 			expect($scope.notes[0]._id).toBe('1');
 		});
+
+		it('should save a new note', function() {
+			$scope.newNote = {noteBody: 'test note'};
+			$httpBackend.expectPOST('/api/notes').respond(200, {_id: '2', noteBody: 'test note'});
+			$scope.createNewNote();
+			$httpBackend.flush();
+			expect($scope.notes[0].noteBody).toBe('test note');
+			expect($scope.notes[0]._id).toBe('2');
+		});
+
+		it('should delete a note', function() {
+			var note = {_id: '3', noteBody: 'test note'};
+			$scope.notes.push(note);
+			$httpBackend.expectDELETE('/api/notes/3').respond(200, {msg: 'success!'});
+			expect($scope.notes.indexOf(note)).not.toBe(-1);
+			$scope.removeNote(note);
+			expect($scope.notes.indexOf(note)).toBe(0);
+			$httpBackend.flush();
+		});
+
+		it('should delete a note even on server error', function() {
+			var note = {_id: '4', noteBody: 'test note'};
+			$scope.notes.push(note);
+			$httpBackend.expectDELETE('/api/notes/4').respond(500, {msg: 'sad face'});
+			expect($scope.notes.indexOf(note)).not.toBe(-1);
+			$scope.removeNote(note);
+			expect($scope.notes.indexOf(note)).toBe(0);
+			$httpBackend.flush();
+		});
 	});
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
