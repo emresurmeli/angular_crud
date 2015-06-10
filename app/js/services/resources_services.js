@@ -40,7 +40,7 @@ module.exports = function(app) {
 				remove: function(resource, callback) {
 					$http({
 						method: 'DELETE',
-						url: '/api' + resourceName + '/' + resource._id
+						url: '/api/' + resourceName + '/' + resource._id
 					})
 					.success(callback)
 					.error(handleError);

@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = function(app) {
-  app.controller('notesController', ['$scope', 'resource', function($scope, $http) {
+  app.controller('notesController', ['$scope', 'resource', function($scope, resource) {
     $scope.notes = [];
 
     var Note = resource('notes');
@@ -12,14 +12,16 @@ module.exports = function(app) {
       });
     };
 
-    $scope.createNewNote = function() {
+    $scope.createNewNote = function(note) {
       Note.create(note, function(data) {
+        console.log('Note: ' + data.noteBody + ' was created');
         $scope.notes.push(data);
       });
     };
 
     $scope.removeNote = function(note) {
       Note.remove(note, function(data) {
+        console.log('Note: ' + note.noteBody + ' was removed')
         $scope.notes.splice($scope.notes.indexOf(note), 1);
       });
     };
@@ -27,12 +29,13 @@ module.exports = function(app) {
     $scope.saveNote = function(note) {
       Note.save(note, function(data) {
         note.editing = false;
-      });
+       });
     };
 
     $scope.editCancel = function(note) {
       if(note.editing) {
         note.noteBody = note.temp;
+        note.temp = undefined;
         note.editing = false;
       } else {
         note.temp = note.noteBody;
