@@ -1,6 +1,7 @@
 'use strict';
 
 module.exports = function(app) {
+
 	var handleError = function(data) {
 		console.log(data);
 	};
@@ -12,9 +13,7 @@ module.exports = function(app) {
 					$http({
 						method: 'GET',
 						url: '/api/' + resourceName
-					})
-					.success(callback)
-					.error(handleError);
+					}).success(callback).error(handleError);
 				},
 
 				create: function(resource, callback) {
@@ -22,9 +21,7 @@ module.exports = function(app) {
 						method: 'POST',
 						url: '/api/' + resourceName,
 						data: resource
-					})
-					.success(callback)
-					.error(handleError);
+					}).success(callback).error(handleError);
 				},
 
 				save: function(resource, callback) {
@@ -32,18 +29,14 @@ module.exports = function(app) {
 						method: 'PUT',
 						url: '/api/' + resourceName + '/' + resource._id,
 						data: resource
-					})
-					.success(callback)
-					.error(handleError);
+					}).success(callback).error(handleError);
 				},
 
 				remove: function(resource, callback) {
 					$http({
 						method: 'DELETE',
 						url: '/api/' + resourceName + '/' + resource._id
-					})
-					.success(callback)
-					.error(handleError);
+					}).success(callback).error(handleError);
 				}
 			};
 		};
