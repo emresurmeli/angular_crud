@@ -54,10 +54,11 @@ module.exports = function(grunt) {
 
 		watch: {
 			app: {
-				files: ['.app/**/*.html'],
+				files: ['server.js', 'tests/*.js', 'models/*.js', 'routes/*.js', 'app/**/**/*.js', 'package.json'],
 				tasks: ['webpack:client', 'copy:html'],
 				options: {
-					liveload: true
+					liveload: true,
+					spawn: false
 				}
 			}
 		}
