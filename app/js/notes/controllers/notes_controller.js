@@ -21,7 +21,7 @@ module.exports = function(app) {
 
     $scope.removeNote = function(note) {
       Note.remove(note, function(data) {
-        console.log('Note: ' + note.noteBody + ' was removed')
+        console.log('Note: ' + note.noteBody + ' was removed');
         $scope.notes.splice($scope.notes.indexOf(note), 1);
       });
     };
